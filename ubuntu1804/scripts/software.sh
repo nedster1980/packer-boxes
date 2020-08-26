@@ -31,10 +31,10 @@ dpkg -i packages-microsoft-prod.deb
 apt-get -y update
 
 #Install Docker, Ansible, K8s, dotnet core 3.1 and Open JDK 8
-apt-get -y install docker-ce=5:18.09.9~3-0~ubuntu-bionic
+apt-get -y install docker-ce=18.06.3~ce~3-0~ubuntu
 apt-get -qy install kubelet=1.16.13-00 kubeadm=1.16.13-00 kubectl=1.16.13-00
 apt-get -y install dotnet-sdk-3.1
 apt-get -y install openjdk-11-jre-headless
 
 #Hold versions 
-apt-mark hold kubelet kubeadm kubectl docker-ce
+apt-mark hold kubelet kubeadm kubectl docker-ce docker-ce-cli
