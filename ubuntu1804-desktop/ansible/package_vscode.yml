@@ -1,6 +1,6 @@
 ---
 # Download and install VSCODE
-- name: Get GPG key for VSCODE
+- name: "Get GPG key for VSCODE"
 # Example action to import a key from a url
   rpm_key:
     state: present
@@ -9,7 +9,7 @@
   when: ansible_os_family == 'Debian'
 
 
-- name: Add repo
+- name: "Add repo."
   apt_repository:
     repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
     state: present

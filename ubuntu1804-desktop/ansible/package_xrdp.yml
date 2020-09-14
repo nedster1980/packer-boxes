@@ -7,13 +7,13 @@
     state: present
   when: ansible_os_family == 'Debian'
 
-- name: Add the user 'vagrant' to the  group 'ssl-cert' to allow xrdp.
+- name: "Add the user vagrant to the  group ssl-cert to allow xrdp."
   user:
       name: vagrant
       groups: ssl-cert
       append: yes
 
-- name: Configure firewall to allow all access to rdp port 3389
+- name: "Configure firewall to allow all access to rdp port 3389."
   ufw:
       rule: allow
       port: '3389'

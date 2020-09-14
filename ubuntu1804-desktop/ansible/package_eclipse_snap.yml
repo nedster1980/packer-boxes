@@ -1,6 +1,6 @@
 ---
 # Install eclipse via snap with classic confinement
-- name: Install eclipse IDE with option classic
+- name: "Install eclipse IDE with option classic."
   snap:
     name: eclipse
     classic: yes
