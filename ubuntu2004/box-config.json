@@ -101,7 +101,7 @@
   "variables": {
     "cpus": "1",
     "desktop": "false",
-    "disk_size": "130048",
+    "disk_size": "30000",
     "ftp_proxy": "{{ env `ftp_proxy` }}",
     "headless": "true",
     "hostname": "vagrant",
