@@ -26,13 +26,15 @@
         state: present
       when: ansible_os_family == 'Debian'
 
-    - name: "Install snapd and snap-store"
+    - name: "Install snapd"
       apt:
         name:
               - snapd
-              - snap-store
         state: present
       when: ansible_os_family == 'Debian'
+    
+    - name: "Install snap-store via snap"
+      command: snap install snap-store
 
     - import_tasks: package_node_12.yml
     - import_tasks: package_gradle.yml
