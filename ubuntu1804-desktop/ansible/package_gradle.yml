@@ -15,6 +15,6 @@
 - name: "Add a line to gradle.sh to add /usr/local/gradle/bin to path"
   lineinfile:
     path: /etc/profile.d/gradle.sh
-    line: export PATH=/usr/local/gradle-6.5.1/bin:$PATH
+    line: export PATH=$PATH:/usr/local/gradle-6.5.1/bin
     create: yes
     
