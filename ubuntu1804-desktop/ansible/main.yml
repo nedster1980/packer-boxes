@@ -26,6 +26,13 @@
         state: present
       when: ansible_os_family == 'Debian'
 
+    - name: "Install Open VM Tools Desktop"
+      apt:
+        name:
+              - open-vm-tools-desktop
+        state: present
+      when: ansible_os_family == 'Debian'
+
     - name: "Install snapd"
       apt:
         name:
