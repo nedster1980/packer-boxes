@@ -11,6 +11,7 @@
               - wget
               - curl
               - vim
+              - snapd
         state: present
       when: ansible_os_family == 'Debian'
 
@@ -22,6 +23,14 @@
               - xorg
               - dbus-x11
               - x11-xserver-utils
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: "Install snapd and snap-store"
+      apt:
+        name:
+              - snapd
+              - snap-store
         state: present
       when: ansible_os_family == 'Debian'
 
