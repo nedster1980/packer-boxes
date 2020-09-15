@@ -13,6 +13,17 @@
       groups: ssl-cert
       append: yes
 
+- name: Add xfce-session to /etc/xrdp/startwm.sh
+  blockinfile:
+      path: /etc/xrdp/startwm.sh
+      insertbefore: ".*test.*Xsession.*exec.*Xsession"
+      backup: yes
+      state: present
+      block: |
+        #xrdp multiple users configuration
+        xfce-session
+
+
 - name: "Configure firewall to allow all access to rdp port 3389."
   ufw:
       rule: allow
