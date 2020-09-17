@@ -7,22 +7,11 @@
     state: present
   when: ansible_os_family == 'Debian'
 
-- name: "Add the user vagrant to the  group ssl-cert to allow xrdp."
+- name: "Add the xrdp user to the group ssl-cert."
   user:
-      name: vagrant
+      name: xrdp
       groups: ssl-cert
       append: yes
-
-- name: Add xfce-session to /etc/xrdp/startwm.sh
-  blockinfile:
-      path: /etc/xrdp/startwm.sh
-      insertbefore: ".*test.*Xsession.*exec.*Xsession"
-      backup: yes
-      state: present
-      block: |
-        #xrdp multiple users configuration
-        xfce-session
-
 
 - name: "Configure firewall to allow all access to rdp port 3389."
   ufw:

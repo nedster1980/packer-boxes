@@ -12,17 +12,21 @@
               - curl
               - vim
               - snapd
-        state: present
-      when: ansible_os_family == 'Debian'
-
-    - name: "Install XFCE interface."
-      apt:
-        name:
-              - xfce4
-              - xfce4-goodies
-              - xorg
-              - dbus-x11
-              - x11-xserver-utils
+              - network-manager
+              - nfs-common
+              - lsof
+              - nmap
+              - sysstat
+              - mlocate
+              - unzip
+              - zip
+              - net-tools
+              - git
+              - tree
+              - apt-utils
+              - cifs-utils
+              - wget
+              - dnsutils
         state: present
       when: ansible_os_family == 'Debian'
 
@@ -45,6 +49,8 @@
 
     - import_tasks: package_node_12.yml
     - import_tasks: package_gradle.yml
-    - import_tasks: package_xrdp.yml
+    - import_tasks: package_chrome.yml
     - import_tasks: package_vscode.yml
     - import_tasks: package_eclipse_snap.yml
+    - import_tasks: package_xrdp.yml
+    - import_tasks: package_mate.yml

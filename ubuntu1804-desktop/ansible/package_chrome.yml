@@ -1,0 +1,21 @@
+---
+# Download and install Google Chrome
+- name: "Get GPG key for Google Chrome"
+# Example action to import a key from a url
+  apt_key:
+    url: https://dl.google.com/linux/linux_signing_key.pub
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: "Add Google repo."
+  apt_repository:
+    repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+    state: present
+  when: ansible_os_family == 'Debian'
+
+# Install VSCODE
+- name: "Install Google Chrome"
+  apt:
+    name:
+          - google-chrome-stable
+    state: present

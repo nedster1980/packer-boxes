@@ -1,0 +1,36 @@
+---
+# Download and install mate
+- name: "Install Mate GUI."
+  apt:
+    name:
+          - mate-core
+          - mate-desktop-environment 
+          - mate-notification-daemon
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: "Install working Remote Desktop Protocol (RDP) modules for X.org (xorgxrdp-hwe-18.04)."
+  apt:
+    name:
+          - xorgxrdp-hwe-18.04
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: "Add the user vagrant to the xrdp group."
+  user:
+      name: vagrant
+      groups: xrdp
+      append: yes
+
+- name: "Create file .xsession and insert mate-session."
+  lineinfile:
+      path: /home/vagrant/.xsession
+      line: mate-session
+      create: yes
+      mode: '0755'
+
+- name: "Restart service xrdp."
+  service:
+      name: xrdp
+      state: restarted
+      enabled: yes
