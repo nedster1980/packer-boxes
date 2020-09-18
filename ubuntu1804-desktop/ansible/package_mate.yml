@@ -34,15 +34,8 @@
       groups: xrdp
       append: yes
 
-- name: "Create file .xsession and insert mate-session."
-  lineinfile:
-      path: /home/vagrant/.xsession
-      line: mate-session
-      create: yes
-      mode: '0755'
-
-- name: "Restart service xrdp."
-  service:
+- name: "Add the user vagrant to the xrdp group."
+  user:
       name: xrdp
-      state: restarted
-      enabled: yes
+      groups: ssl-cert
+      append: yes

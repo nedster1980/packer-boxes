@@ -15,4 +15,4 @@
   apt:
     name: nodejs
     update_cache: yes
-    state: present  
+    state: present
