@@ -9,6 +9,18 @@
     state: present
   when: ansible_os_family == 'Debian'
 
+- name: "Install xserver-xorg-hwe-18.04"
+  apt:
+    name:
+          - xserver-xorg-hwe-18.04
+    state: present
+  when: ansible_os_family == 'Debian
+
+- name: "Clean unwanted olderstuff."
+  apt:
+    autoremove: yes
+    purge: yes
+
 - name: "Install working Remote Desktop Protocol (RDP) modules for X.org (xorgxrdp-hwe-18.04)."
   apt:
     name:
