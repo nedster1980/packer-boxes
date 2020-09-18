@@ -14,7 +14,7 @@
     name:
           - xserver-xorg-hwe-18.04
     state: present
-  when: ansible_os_family == 'Debian
+  when: ansible_os_family == 'Debian'
 
 - name: "Clean unwanted olderstuff."
   apt:
