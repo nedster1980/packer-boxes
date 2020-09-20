@@ -12,6 +12,12 @@
       name: xrdp
       groups: ssl-cert
       append: yes
+      
+- name: "Add the user vagrant to the xrdp group."
+  user:
+      name: vagrant
+      groups: xrdp
+      append: yes
 
 - name: "Configure firewall to allow all access to rdp port 3389."
   ufw:

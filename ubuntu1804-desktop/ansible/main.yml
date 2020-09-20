@@ -57,6 +57,20 @@
         state: present
       when: ansible_os_family == 'Debian'
 
+    - name: "Install docker-compose"
+      command: sudo curl -L https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+      
+    - name: "Make docker-compose in /usr/local/bin executable."
+      file:
+        path: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: "Add the vagrant user to the docker group."
+      user:
+          name: vagrant
+          groups: docker
+          append: yes
+
     - name: "Install eclipse IDE with option classic via snap"
       command: snap install --classic eclipse
 
