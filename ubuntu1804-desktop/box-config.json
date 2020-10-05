@@ -1,35 +1,93 @@
 {
   "variables": {
-    "cpus": "1",
-    "desktop": "false",
-    "disk_size": "50000",
-    "ftp_proxy": "{{ env `ftp_proxy` }}",
-    "headless": "true",
-    "hostname": "vagrant",
-    "http_proxy": "{{ env `http_proxy` }}",
-    "https_proxy": "{{ env `https_proxy` }}",
-    "install_vagrant_key": "true",
-    "iso_checksum": "8c5fc24894394035402f66f3824beb7234b757dd2b5531379cb310cedfdf0996",
-    "iso_checksum_type": "sha256",
-    "iso_name": "ubuntu-18.04.5-server-amd64.iso",
-    "iso_path1": "C:/Users/titch/OS-Images/Ubuntu/",
-    "iso_path2": "/home/nrichards/iso/",
-    "iso_url": "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.5-server-amd64.iso",
-    "memory": "4096",
-    "no_proxy": "{{ env `no_proxy` }}",
-    "rsync_proxy": "{{ env `rsync_proxy` }}",
-    "ssh_fullname": "Neil Richards",
-    "ssh_password": "vagrant",
-    "ssh_username": "vagrant",
-    "ssh_private_key": "{{env `USERPROFILE`}}/.vagrant.d/insecure_private_key",
-    "update": "false",
-    "vagrant_cloud_token": "{{env `VAGRANT_CLOUD_TOKEN`}}",
-    "vbox_guest_additions_iso": "VBoxGuestAdditions_6.1.10.iso",
-    "vbox_guest_additions_local_path": "/home/nrichards/virtualbox/",
-    "vbox_guest_additions_path": "http://download.virtualbox.org/virtualbox/6.1.10/",
-    "version": "0.1.6",
-    "vm_name": "packer-ubuntu1804-desktop"
+      "iso_checksum": "8c5fc24894394035402f66f3824beb7234b757dd2b5531379cb310cedfdf0996",
+      "iso_checksum_type": "sha256",
+      "iso_name": "ubuntu-18.04.5-server-amd64.iso",
+      "iso_path1": "C:/Users/titch/OS-Images/Ubuntu/",
+      "iso_path2": "/home/nrichards/iso/",
+      "iso_url": "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.5-server-amd64.iso",
+      "checksum": "e2ecdace33c939527cbc9e8d23576381c493b071107207d2040af72595f8990b",
+      "type": "sha256",
+      "non_gui": "false",
+      "vboxversion": "04.5",
+      "osdetails": "ubuntu-18.04.5-amd64",
+      "version": "{{ timestamp }}",
+      "vagrantcloud_token": "{{env `VAGRANT_CLOUD_TOKEN`}}",
+      "version_desc": "Latest kernel build of Ubuntu Vagrant images based on Ubuntu 18.04.5 (With Desktop)"
   },
+  "builders": [{
+      "type": "virtualbox-iso",
+      "iso_urls": [
+        "{{user `iso_path1`}}/{{user `iso_name`}}",
+        "{{user `iso_path2`}}/{{user `iso_name`}}",
+        "{{user `iso_url`}}"
+      ],
+      "iso_checksum": "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
+      "headless": "{{ user `non_gui` }}",
+      "vm_name": "ubuntu-18.{{ user `vboxversion` }}-amd64-to-vagrant",
+      "guest_os_type": "Ubuntu_64",
+      "disk_size": "30720",
+      "vboxmanage": [
+          [
+              "modifyvm",
+              "{{.Name}}",
+              "--memory",
+              "4096"
+          ],
+          [
+              "modifyvm",
+              "{{.Name}}",
+              "--cpus",
+              "2"
+          ],
+          [
+              "modifyvm",
+              "{{.Name}}",
+              "--audio",
+              "none"
+          ],
+          [
+              "modifyvm",
+              "{{.Name}}",
+              "--usb",
+              "off"
+          ]
+      ],
+      "http_directory": "http",
+      "boot_wait": "10s",
+      "boot_command": [
+          "<esc><wait>",
+          "<esc><wait>",
+          "<enter><wait>",
+          "/install/vmlinuz<wait>",
+          " auto<wait>",
+          " console-setup/ask_detect=false<wait>",
+          " console-setup/layoutcode=gb<wait>",
+          " console-setup/modelcode=pc105<wait>",
+          " debconf/frontend=noninteractive<wait>",
+          " debian-installer=en_GB.UTF-8<wait>",
+          " fb=false<wait>",
+          " initrd=/install/initrd.gz<wait>",
+          " kbd-chooser/method=gb<wait>",
+          " keyboard-configuration/layout=GB<wait>",
+          " keyboard-configuration/variant=GB<wait>",
+          " locale=en_GB.UTF-8<wait>",
+          " netcfg/get_domain=vm<wait>",
+          " netcfg/get_hostname=ubuntu-vagrant<wait>",
+          " grub-installer/bootdev=/dev/sda<wait>",
+          " noapic<wait>",
+          " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<wait>",
+          " -- <wait>",
+          "<enter><wait>"
+      ],
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "6000s",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now"
+  }],
   "provisioners": [
     {
       "type": "shell",
@@ -52,81 +110,23 @@
       "script": "scripts/cleanup.sh"
     }
   ],
-  "builders": [
-    {
-      "type": "virtualbox-iso",
-      "boot_command": [
-        "<esc><wait>",
-        "<esc><wait>",
-        "<enter><wait>",
-        "/install/vmlinuz<wait>",
-        " auto<wait>",
-        " console-setup/ask_detect=false<wait>",
-        " console-setup/layoutcode=us<wait>",
-        " console-setup/modelcode=pc105<wait>",
-        " debconf/frontend=noninteractive<wait>",
-        " debian-installer=en_US<wait>",
-        " fb=false<wait>",
-        " initrd=/install/initrd.gz<wait>",
-        " kbd-chooser/method=us<wait>",
-        " keyboard-configuration/layout=USA<wait>",
-        " keyboard-configuration/variant=USA<wait>",
-        " locale=en_US<wait>",
-        " netcfg/get_domain=vm<wait>",
-        " netcfg/get_hostname=vagrant<wait>",
-        " grub-installer/bootdev=/dev/sda<wait>",
-        " noapic<wait>",
-        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<wait>",
-        " -- <wait>",
-        "<enter><wait>"
-      ],
-      "boot_wait": "10s",
-      "disk_size": "{{user `disk_size`}}",
-      "guest_os_type": "Ubuntu_64",
-      "headless": true,
-      "http_directory": "http",
-      "iso_urls": [
-        "{{user `iso_path1`}}/{{user `iso_name`}}",
-        "{{user `iso_path2`}}/{{user `iso_name`}}",
-        "{{user `iso_url`}}"
-      ],
-      "iso_checksum": "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
-      "ssh_username": "{{user `ssh_username`}}",
-      "ssh_password": "{{user `ssh_password`}}",
-      "ssh_private_key_file": "{{user `ssh_private_key`}}",
-      "ssh_port": 22,
-      "ssh_wait_timeout": "1800s",
-      "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-      "virtualbox_version_file": ".vbox_version",
-      "vm_name": "{{user `vm_name`}}",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "{{user `memory`}}"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "1"
-        ]
-      ]
-    }
-  ],
   "post-processors": [
-    [
-      {
-        "output": "builds/{{.Provider}}-ubuntu1804-desktop.box",
-        "type": "vagrant"
-      },
-      {
-        "type": "vagrant-cloud",
-        "box_tag": "nedster1980/ubuntu1804-desktop",
-        "version": "{{user `version`}}"
-      }
-    ]
+      [{
+              "type": "vagrant",
+              "keep_input_artifact": false,
+              "compression_level": 9,
+              "override": {
+                  "virtualbox": {
+                      "output": "target-ubuntu-18.04.05/{{ user `osdetails` }}.box"
+                  }
+              }
+          },
+          {
+              "type": "vagrant-cloud",
+              "box_tag": "nedster1980/ubuntu1804-desktop",
+              "version": "{{user `version`}}",
+              "version_description": "{{ user `version_desc` }}"
+          }
+      ]
   ]
 }

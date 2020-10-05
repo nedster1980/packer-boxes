@@ -7,28 +7,25 @@
     - name: "Install some helpful utilities."
       apt:
         name:
-              - git
-              - wget
-              - curl
-              - vim
-              - snapd
-              - network-manager
-              - nfs-common
-              - lsof
-              - nmap
-              - sysstat
-              - mlocate
-              - unzip
-              - zip
-              - net-tools
-              - git
-              - tree
-              - apt-utils
-              - cifs-utils
-              - wget
-              - dnsutils
-              - open-vm-tools-desktop
-              - snapd
+          - cifs-utils
+          - libssl-dev
+          - libreadline-dev
+          - zlib1g-dev
+          - vim
+          - linux-source
+          - cryptsetup
+          - snapd
+          - network-manager
+          - nfs-common
+          - lsof
+          - nmap
+          - sysstat
+          - mlocate
+          - net-tools
+          - tree
+          - apt-utils
+          - dnsutils
+          - open-vm-tools-desktop
         state: present
       when: ansible_os_family == 'Debian'
     
