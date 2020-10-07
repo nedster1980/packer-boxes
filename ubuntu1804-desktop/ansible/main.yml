@@ -26,12 +26,16 @@
           - apt-utils
           - dnsutils
           - open-vm-tools-desktop
+          - openjdk-11-jre-headless
         state: present
       when: ansible_os_family == 'Debian'
     
     - name: "Install snap-store via snap"
       command: snap install snap-store
 
+    - import_tasks: package_gradle.yml
+    - import_tasks: package_maven.yml
+    - import_tasks: package_ant.yml
     - import_tasks: package_node_12.yml
     - import_tasks: package_chrome.yml
     - import_tasks: package_docker.yml
@@ -49,7 +53,6 @@
               - kubectl=1.16.13-00
               - google-chrome-stable
               - dotnet-sdk-3.1
-              - openjdk-11-jre-headless
               - code
         state: present
       when: ansible_os_family == 'Debian'
@@ -74,10 +77,10 @@
     - name: Change the working directory to somedir/ and run the command as db_owner if /path/to/database does not exist.
       command: apt-mark hold kubelet kubeadm kubectl docker-ce docker-ce-cli
 
-    - name: "Create file .xsession and insert mate-session."
+    - name: "Create file .xsession and insert gnome-session."
       lineinfile:
           path: /home/vagrant/.xsession
-          line: mate-session
+          line: gnome-session
           create: yes
           mode: '0755'
     

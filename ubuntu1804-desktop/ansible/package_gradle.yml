@@ -1,0 +1,17 @@
+---
+# Download and install gradle
+- name: "Download and unarchive gradle and place in /usr/local/gradle-6.5.1"
+  unarchive:
+    src: https://downloads.gradle-dn.com/distributions/gradle-6.5.1-bin.zip
+    dest: /usr/local/
+    remote_src: yes
+        
+- name: "Create gradle.sh in /etc/profile.d to set up env variables"
+  template:
+    src: /templates/gradle.sh.j2
+    dest: /etc/profile.d/gradle.sh
+    owner: root
+    group: root
+    mode: 0644
+
+
