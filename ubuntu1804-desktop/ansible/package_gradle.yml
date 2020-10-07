@@ -8,7 +8,7 @@
         
 - name: "Create gradle.sh in /etc/profile.d to set up env variables"
   template:
-    src: /templates/gradle.sh.j2
+    src: templates/gradle.sh.j2
     dest: /etc/profile.d/gradle.sh
     owner: root
     group: root

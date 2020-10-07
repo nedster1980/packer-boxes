@@ -8,7 +8,7 @@
             
 - name: "Create maven.sh in /etc/profile.d to set up env variables"
   template:
-    src: /templates/ant.sh.j2
+    src: templates/ant.sh.j2
     dest: /etc/profile.d/ant.sh
     owner: root
     group: root
