@@ -117,7 +117,7 @@
               "compression_level": 9,
               "override": {
                   "virtualbox": {
-                      "output": "target-ubuntu-18.04.05/{{ user `osdetails` }}.box"
+                      "output": "target-ubuntu-18.04.05-desktop/{{ user `osdetails` }}.box"
                   }
               }
           },
