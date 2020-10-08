@@ -1,24 +1,5 @@
 ---
 # Download and configure xrdp
-- name: "Install XRDP Remote Desktop."
-  apt:
-    name:
-          - xrdp
-    state: present
-  when: ansible_os_family == 'Debian'
-
-- name: "Add the xrdp user to the group ssl-cert."
-  user:
-      name: xrdp
-      groups: ssl-cert
-      append: yes
-      
-- name: "Add the user vagrant to the xrdp group."
-  user:
-      name: vagrant
-      groups: xrdp
-      append: yes
-
 - name: "Configure firewall to allow all access to rdp port 3389."
   ufw:
       rule: allow

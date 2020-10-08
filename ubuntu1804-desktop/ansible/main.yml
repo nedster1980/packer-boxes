@@ -76,17 +76,4 @@
 
     - name: Change the working directory to somedir/ and run the command as db_owner if /path/to/database does not exist.
       command: apt-mark hold kubelet kubeadm kubectl docker-ce docker-ce-cli
-
-    - name: "Create file .xsession and insert gnome-session."
-      lineinfile:
-          path: /home/vagrant/.xsession
-          line: gnome-session
-          create: yes
-          mode: '0755'
-    
-    - name: "Restart service xrdp."
-      service:
-          name: xrdp
-          state: restarted
-          enabled: yes
     
