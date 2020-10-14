@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: "Update shebang in /etc/xrdp/startwm.sh as this breaks xrdp and user shell"
+      lineinfile:
+        path: /etc/xrdp/startwm.sh
+        regexp: '^#!\/bin\/sh'
+        line: '#!/bin/bash'
+        state: present
+
+    - name: "Update shebang in /etc/X11/Xsession as this breaks xrdp and user shell"
+      lineinfile:
+        path: /etc/X11/Xsession
+        regexp: '^#!\/bin\/sh'
+        line: '#!/bin/bash'
+        state: present
+
+    - name: "Insert encrypt_level=high at the end of file /etc/xrdp/xrdp.ini"
+      lineinfile:
+        path: /etc/xrdp/xrdp.ini
+        line: encrypt_level=high
+
+    - name: Restart xrdp to pick up changes
+      systemd:
+         state: restarted
+         daemon_reload: yes
+         name: xrdp
