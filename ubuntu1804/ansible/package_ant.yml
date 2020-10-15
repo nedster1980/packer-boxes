@@ -1,0 +1,15 @@
+---
+# Download and install ant
+- name: "Download and unarchive maven and place in /usr/local/apache-ant-1.10.9"
+  unarchive:
+    src: https://mirrors.gethosted.online/apache//ant/binaries/apache-ant-1.10.9-bin.zip
+    dest: /usr/local/
+    remote_src: yes
+            
+- name: "Create maven.sh in /etc/profile.d to set up env variables"
+  template:
+    src: templates/ant.sh.j2
+    dest: /etc/profile.d/ant.sh
+    owner: root
+    group: root
+    mode: 0644

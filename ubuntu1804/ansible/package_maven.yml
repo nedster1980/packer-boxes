@@ -1,0 +1,15 @@
+---
+# Download and install maven
+- name: "Download and unarchive maven and place in /usr/local/apache-maven-3.6.3"
+  unarchive:
+    src: https://apache.mirrors.nublue.co.uk/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
+    dest: /usr/local/
+    remote_src: yes
+            
+- name: "Create maven.sh in /etc/profile.d to set up env variables"
+  template:
+    src: templates/maven.sh.j2
+    dest: /etc/profile.d/maven.sh
+    owner: root
+    group: root
+    mode: 0644

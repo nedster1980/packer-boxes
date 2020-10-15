@@ -1,0 +1,15 @@
+---
+# Download GPG key for microsoft
+- name: "Get GPG key for Microsoft products VS Code and dotnet sdk"
+# Example action to import a key from a url
+  apt_key:
+    id: BC528686B50D79E339D3721CEB3E94ADBE1229CF
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  when: ansible_os_family == 'Debian'
+  
+- name: "Add repo for dotnet-sdk-3.1."
+  apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod bionic main
+    state: present
+  when: ansible_os_family == 'Debian'

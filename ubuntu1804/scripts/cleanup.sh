@@ -6,7 +6,6 @@
 
 # Apt cleanup.
 apt-get autoremove
-apt-get update
 
 # Delete unneeded files.
 rm -f /home/vagrant/*.sh

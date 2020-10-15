@@ -1,0 +1,16 @@
+---
+# Get K8S Key and Add Repo.
+- name: "Get GPG key for K8S"
+# Example action to import a key from a url
+  apt_key:
+    id: 54A647F9048D5688D7DA2ABE6A030B21BA07F4FB
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  when: ansible_os_family == 'Debian'
+
+#Add Docker repo to apt sources
+- name: "Add K8s Repo."
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+  when: ansible_os_family == 'Debian'
